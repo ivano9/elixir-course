@@ -16,7 +16,7 @@ defmodule TextClient.Impl.Player do
     end
 
     def interact({_game, tally = %{game_state: :lost}}) do
-        IO.puts "Sorry, you lost... the word was #{tally.letters |> Enum.join()}"
+        IO.puts "Sorry, you lost... the word was #{tally.letters |> Enum.join}"
     end
 
     def interact({game, tally}) do
@@ -37,8 +37,9 @@ defmodule TextClient.Impl.Player do
     def current_word(tally) do
         [
           "Word so far: ", tally.letters |> Enum.join(" "),
-          "   turns left: ", tally.turns_left |> to_string,
-          "   used so far: ", tally.used |> Enum.join(",")
+          [:green, "   turns left: ", tally.turns_left |> to_string,
+          "   used: "] |> IO.ANSI.format(true),
+          [:yellow, tally.used |> Enum.join(",")] |> IO.ANSI.format(true)
         ]
     end
 
