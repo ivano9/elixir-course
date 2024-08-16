@@ -2,6 +2,8 @@ defmodule Procs do
 
   def hello(count) do
     receive do
+      {:reset} ->
+        hello(0)
       {:quit} ->
         IO.puts "I'm outta here"
       {:add, n} ->
