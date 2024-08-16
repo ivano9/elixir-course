@@ -1,10 +1,13 @@
 defmodule Dictionary do
-  @words "assets/words.txt" # Atributte module like a difine in erlang
-    |> File.read!()
-    |> String.split(~r/\n/, trim: true)
 
-  def random_word do
-    @words
-    |> Enum.random()
-  end
+  alias Dictionary.Impl.WordList
+
+  @type t :: WordList.t
+
+  @spec start :: t
+  defdelegate start, to: WordList, as: :word_list
+
+  @spec random_word(t) :: String.t
+  defdelegate random_word(word_list), to: WordList
 end
+
