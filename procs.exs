@@ -1,5 +1,17 @@
 defmodule Procs do
 
+  def hello(count) do
+    receive do
+      {:quit} ->
+        IO.puts "I'm outta here"
+      {:add, n} ->
+        hello(count+n)
+      msg ->
+        IO.puts "#{count}: #{inspect msg}"
+        hello(count)
+    end
+  end
+
   def greeter(what_to_say) do
     receive do
       msg ->
