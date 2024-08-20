@@ -2,7 +2,9 @@ defmodule Procs do
 
   def hello(count) do
     receive do
-      {:reset} ->
+      {:crash, reason} ->
+        exit(reason)
+    {:reset} ->
         hello(0)
       {:quit} ->
         IO.puts "I'm outta here"
@@ -21,4 +23,25 @@ defmodule Procs do
     end
     greeter(what_to_say)
   end
+
+  def init(pid) when is_pid(pid) do
+    receive do
+      :agent ->
+        pid
+      :stop ->
+        exit(:normal)
+    end
+    init(pid)
+  end
+
+  def init(state) do
+    receive do
+      :start ->
+        {:ok, pid} = Agent.start_link(fn -> state end)
+        init(pid)
+      :stop ->
+        exit(:normal)
+    end
+  end
+
 end
