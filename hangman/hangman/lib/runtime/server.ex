@@ -11,6 +11,7 @@ defmodule Hangman.Runtime.Server do
 
     ### server process
     def init(_) do
+        :logger.notice("new game begin created")
         {:ok, Game.new_game}
     end
 
