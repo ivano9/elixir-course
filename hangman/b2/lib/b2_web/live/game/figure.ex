@@ -4,10 +4,9 @@ defmodule B2Web.Live.Game.Figure do
     def render(assigns) do
         ~H"""
             <div class="figure">
-            <%!-- <%= svg_figure(assigns) %> --%>
-            <pre>
-                <%= figure_for(@tally.turns_left) %>
-            </pre>
+                <div style="display: block">
+                    <%= svg_figure(assigns) %>
+                </div>
             <p class="turns-left">
               Turns left: <%= @tally.turns_left %>
             </p>
